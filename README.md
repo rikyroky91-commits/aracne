@@ -1,11 +1,53 @@
-# 🕸 Aracne
+# 🕸 Aracne — group voice calls in the browser that don't hijack your phone
+
+![Python](https://img.shields.io/badge/server-Python%20%2B%20aiohttp-3776AB) ![WebCodecs](https://img.shields.io/badge/audio-WebCodecs%20Opus-orange) ![No WebRTC](https://img.shields.io/badge/WebRTC-none-lightgrey) ![Deploy](https://img.shields.io/badge/deploy-Render%20blueprint-46E3B7)
+
+**Open-mic group calls, chat, links and file sharing (APKs included) for small teams, straight from a browser tab.**
+
+Most browser calling apps use WebRTC, and Android treats them as a phone call: it switches the audio
+to "in-call" mode, applies voice filters and gets in the way of everything else you're doing.
+Aracne skips WebRTC entirely. It encodes Opus with **WebCodecs**, sends it over a plain **WebSocket**
+and plays it through an **AudioWorklet**, so Android sees it as *music*. You can keep using any other
+app while you're on the call.
+
+### Highlights
+- 🎙️ **Up to 4 simultaneous voices**, 10 ms Opus frames at 32 kbit/s, late joiners hear immediately
+- 📉 **Adaptive jitter buffer** (97th percentile of arrival delay + 10 ms) — **~100 ms estimated end-to-end** in local tests with normal jitter, recovering on its own after network spikes
+- 🔇 Software noise gate and 80 Hz high-pass instead of the phone's call filters
+- 📎 Messages, links and files up to 100 MB on the side channel, so big uploads never stutter the voice; APKs install with one tap
+- 🪟 Automatic **Picture-in-Picture** on Android Chrome to keep the mic alive in the background
+- 🩺 Built-in diagnostics: mic, gate, per-voice jitter, latency breakdown, event log
+- 🚀 One-click deploy to Render (HTTPS included) with an optional access code
+
+### Try it
+```bash
+pip install -r requirements.txt
+python server.py            # http://localhost:8080 — open it in two tabs
+python server.py --https    # self-signed HTTPS to test from phones on your LAN
+```
+Or deploy your own instance: **Render → New → Blueprint →** pick this repo (it reads `render.yaml`).
+Requires an up-to-date Chrome or Edge (WebCodecs Opus + AudioWorklet).
+
+### Tech
+Python · aiohttp · WebSocket · WebCodecs (AudioEncoder/AudioDecoder) · AudioWorklet · Picture-in-Picture · Render
+
+---
+
+## 🇮🇹 In breve
+
+Chiamata di gruppo, messaggi, link e file (anche APK) tra colleghi, nel browser. Niente WebRTC e niente
+filtri VoIP: Android non la vede come una chiamata, la voce esce sul canale **Musica** e il telefono resta
+libero per usare altre app. Latenza misurata ~100 ms su rete normale. Sotto la documentazione tecnica completa.
+
+---
+
 
 Chiamata di gruppo, messaggi, link e file (anche APK) tra colleghi, nel browser. Niente
 WebRTC e niente filtri VoIP: Android non la vede come una chiamata, la voce esce sul
 canale **Musica** e il telefono resta libero (puoi usare altre app mentre sei in
 chiamata).
 
-## Come funziona
+## Come funziona (documentazione tecnica)
 
 ```
  [Chi parla]                                   [Chi ascolta]

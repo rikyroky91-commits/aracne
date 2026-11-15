@@ -10,6 +10,8 @@ Aracne skips WebRTC entirely. It encodes Opus with **WebCodecs**, sends it over 
 and plays it through an **AudioWorklet**, so Android sees it as *music*. You can keep using any other
 app while you're on the call.
 
+<p align="center"><img src="docs/ingresso-telefono.png" width="30%" alt="Join screen"> <img src="docs/chiamata-telefono.png" width="30%" alt="Call with three people, chat and links on a phone"> <img src="docs/chiamata-desktop.png" width="36%" alt="Same call on desktop"></p>
+
 ### Highlights
 - 🎙️ **Up to 4 simultaneous voices**, 10 ms Opus frames at 32 kbit/s, late joiners hear immediately
 - 📉 **Adaptive jitter buffer** (97th percentile of arrival delay + 10 ms) — **~100 ms estimated end-to-end** in local tests with normal jitter, recovering on its own after network spikes
